@@ -32,24 +32,6 @@ npx skills add K-Dense-AI/scientific-agent-skills
 
 This is a common standards-based installer for supported Agent Skills hosts, including current versions of Claude Code, Claude Cowork, Codex, Gemini CLI, Google Antigravity, and Cursor. Confirm installation paths and optional metadata behavior in your host's current documentation.
 
-### Option 2: GitHub CLI (gh skill)
-
-If you use the [GitHub CLI](https://cli.github.com/) (v2.90.0+), you can install skills with [gh skill](https://github.blog/changelog/2026-04-16-manage-agent-skills-with-github-cli/):
-
-\# Browse and install interactively  
-gh skill install K-Dense-AI/scientific-agent-skills
-
-\# Install a specific skill directly  
-gh skill install K-Dense-AI/scientific-agent-skills scanpy
-
-\# Target a specific agent host  
-gh skill install K-Dense-AI/scientific-agent-skills \--agent cursor  
-gh skill install K-Dense-AI/scientific-agent-skills \--agent claude-code  
-gh skill install K-Dense-AI/scientific-agent-skills \--agent codex  
-gh skill install K-Dense-AI/scientific-agent-skills \--agent gemini
-
-gh skill automatically installs to the correct directory for your agent host and records provenance metadata for supply chain integrity.
-
 #### Version pinning
 
 Pin to a specific release tag or commit SHA for reproducible installs:
@@ -67,23 +49,6 @@ gh skill update
 
 \# Update all installed skills  
 gh skill update \--all
-
-### Option 3: Agent Plugins (Cursor, Codex, and other plugin clients)
-
-This repository is a valid [Agent Plugins](https://agent-plugins.org/) 1.0.0 package: root [plugin.json](https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/plugin.json) plus Agent Skills under skills/. Clients that support the standard discover every immediate child of skills/ that contains a SKILL.md.
-
-Cursor — symlink or copy the repo into the local plugins directory, then reload:
-
-mkdir \-p \~/.cursor/plugins/local  
-ln \-s "$(pwd)" \~/.cursor/plugins/local/scientific-agent-skills
-
-Restart Cursor or run Developer: Reload Window, then confirm the plugin and its skills appear under Customize. See [Cursor plugins](https://cursor.com/docs/plugins).
-
-Codex — install from a local checkout (confirm the current CLI flag names in Codex docs):
-
-codex plugins install .
-
-Compatible clients (Cursor, Codex, GitHub Copilot, VS Code, Kiro, and others listed at [agent-plugins.org](https://agent-plugins.org/compatible-clients)) share the same package layout; installation UX stays client-specific.
 
 ### Other Agent Skills hosts (OpenClaw, NemoClaw, Pi, Hermes, …)
 
@@ -108,7 +73,7 @@ Skills can execute code and influence your coding agent's behavior. Review what 
 
 Agent Skills are powerful — they can instruct your AI agent to run arbitrary code, install packages, make network requests, and modify files on your system. A malicious or poorly written skill has the potential to steer your coding agent into harmful behavior.
 
-We take security seriously. All contributions go through a review process, and we run LLM-based security scans (via [Cisco AI Defense Skill Scanner](https://github.com/cisco-ai-defense/skill-scanner)) on every skill in this repository. However, as a small team with a growing number of community contributions, we cannot guarantee that every skill has been exhaustively reviewed for all possible risks.
+We take security seriously. All contributions go through a review process, and we run LLM-based security scans on every skill in this repository. However, as a small team with a growing number of community contributions, we cannot guarantee that every skill has been exhaustively reviewed for all possible risks.
 
 It is ultimately your responsibility to review the skills you install and decide which ones to trust.
 
@@ -122,15 +87,15 @@ We recommend the following:
 uv pip install cisco-ai-skill-scanner
 
 * skill-scanner scan /path/to/skill \--use-behavioral  
-* Report anything suspicious. If you find a skill that looks malicious or behaves unexpectedly, please [open an issue](https://github.com/K-Dense-AI/scientific-agent-skills/issues) immediately so we can investigate.
+* Report anything suspicious. If you find a skill that looks malicious or behaves unexpectedly, immediately so we can investigate.
 
-Skills are scanned weekly — incrementally, so unchanged skills carry their previous findings forward, with a full rescan of everything at least every 30 days and whenever the scanner or model changes — and the results are published to [docs/security-report.md](https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/docs/security-report.md). See [SECURITY.md](https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/SECURITY.md) for our security policy, what is in scope, how to report a vulnerability privately, and how to contest a scan finding. We try to address security gaps as they arise.
+Skills are scanned weekly — incrementally, so unchanged skills carry their previous findings forward, with a full rescan of everything at least every 30 days and whenever the scanner or model changes — and the results are published to [docs/security-report.md] for our security policy, what is in scope, how to report a vulnerability privately, and how to contest a scan finding. We try to address security gaps as they arise.
 
 ## Prerequisites
 
 * Python: 3.13+ for repository tooling; individual skill dependencies may support broader Python ranges  
 * uv: Python package manager (required for installing skill dependencies)  
-* Client: Any agent that supports the [Agent Skills](https://agentskills.io/) standard (Cursor, Claude Code, Gemini CLI, Codex, Google Antigravity, etc.)  
+* Client: Any agent that supports the standard (Cursor, Claude Code, Gemini CLI, Codex, Google Antigravity, etc.)  
 * System: macOS, Linux, or Windows with WSL2  
 * Dependencies: Automatically handled by individual skills (check SKILL.md files for specific requirements)
 
@@ -248,7 +213,6 @@ networks, and search GEO for similar patterns.
 
 Skills Used: database-lookup, torch-geometric, arboreto, pymc, networkx, scientific-visualization
 
-📖 Want more examples? Check out [docs/examples.md](https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/docs/examples.md) for comprehensive workflow examples and detailed use cases across all scientific domains.
 
 ---
 
@@ -446,7 +410,7 @@ A unified database-lookup skill provides deterministic REST API access to 78 pub
 * Cancer genomics: DepMap (cancer cell line dependencies, drug sensitivity, gene effect profiles)  
 * Cancer imaging: Imaging Data Commons (NCI radiology & pathology datasets via idc-index)  
 * Knowledge graph: PrimeKG (precision medicine knowledge graph — genes, drugs, diseases, phenotypes)  
-* Biomedical knowledge graph search: [NCATS ARAX](https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/skills/ncats-arax) (bounded, Biolink-constrained one-hop and endpoint-pinned two-hop queries over knowledge graphs with up to five explicitly selected NCATS Translator providers, with provenance preservation)  
+* Biomedical knowledge graph search:bounded, Biolink-constrained one-hop and endpoint-pinned two-hop queries over knowledge graphs with up to five explicitly selected NCATS Translator providers, with provenance preservation
 * Fiscal data: U.S. Treasury Fiscal Data (national debt, Treasury statements, auctions, exchange rates)  
 * Scientific ML resource catalog: Hugging Science (curated index of datasets, models, blog posts, and interactive Spaces across 17 scientific domains — astronomy, biology, chemistry, climate, genomics, materials science, medicine, physics, scientific reasoning, and more — with usage patterns for datasets, transformers, and gradio\_client)  
 * Individual-level population genomics: OneKGPd (3,202-person high-coverage 1000 Genomes cohort queries)  
