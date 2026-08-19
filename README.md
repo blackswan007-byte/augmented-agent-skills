@@ -52,14 +52,7 @@ gh skill update \--all
 
 ### Other Agent Skills hosts (OpenClaw, NemoClaw, Pi, Hermes, …)
 
-Agent hosts differ in install paths, discovery settings, and support for optional frontmatter fields. npx skills add (Option 1\) commonly installs into the \~/.agents/skills/ convention, with project-scoped installs under .agents/skills/; confirm both paths against your host's current documentation. To install manually on a host configured to scan one of those locations:
-
-git clone https://github.com/K-Dense-AI/scientific-agent-skills.git \~/.agents/skills/scientific-agent-skills   \# user-level  
-git clone https://github.com/K-Dense-AI/scientific-agent-skills.git .agents/skills/scientific-agent-skills      \# project-level
-
-For Hermes versions that support skill taps, add the repository as a tap:
-
-hermes skills tap add K-Dense-AI/scientific-agent-skills
+Agent hosts differ in install paths, discovery settings, and support for optional frontmatter fields. npx skills add (Option 1\) commonly installs into the \~/.agents/skills/ convention, with project-scoped installs under .agents/skills/; confirm both paths against your host's current documentation.
 
 Every SKILL.md has YAML frontmatter, but legacy and community skills vary in metadata formatting (block or flow style) and optional extension fields. Repository updates must keep metadata.version as a quoted numeric string and pass canonical skills-ref validate ./skills/\<skill-name\> checks. Hosts may interpret optional metadata and credential prompts differently, so verify behavior on the target host. Because 161 skills add up to a lot of standing context, consider installing a topical subset rather than the whole collection.
 
